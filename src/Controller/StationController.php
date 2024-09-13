@@ -47,7 +47,8 @@ class StationController extends AbstractController
         $entityManager->persist($borne2);
 
         $station = new Station();
-        $station->setLibelleEmplacement('station 01');
+        $station->setLibelleEmplacement('station 02');
+
         $station->addLesBorne($borne);
         $station->addLesBorne($borne2);
 
