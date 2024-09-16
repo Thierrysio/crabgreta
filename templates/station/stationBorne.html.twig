@@ -1,0 +1,10 @@
+hello {{ laStation.getLibelleEmplacement() }} ta maintenace est le numero {{ laStation.getLaMaintenance().getId() }}
+
+<br>
+
+{% for maStation  in laStation.getLesBornes() %}
+
+      {{ maStation.getIndiceCompteurUnites() }}      
+<br>
+           
+{% endfor %}

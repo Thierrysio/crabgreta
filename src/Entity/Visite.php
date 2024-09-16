@@ -129,4 +129,31 @@ class Visite
 
         return $this;
     }
+
+    public function getTotalIndiceCompteurUnites(): int
+{
+    $total = 0;
+    foreach ($this->getLesBornes() as $borne) {
+        $total += $borne->getIndiceCompteurUnites() ?: 0;
+    }
+    return $total;
+}
+
+public function getTotalIndiceCompteurUnites(): int
+{
+    // Initialise une variable $total à 0 pour accumuler la somme des 'indiceCompteurUnites'.
+    $total = 0;
+    
+    // Récupère la collection des bornes associées à cette visite.
+    $lesBornes = $this->getLesBornes();
+
+    // Utilise une boucle for pour itérer sur chaque indice de la collection.
+    for ($i = 0; $i < count($lesBornes); $i++) {
+        // Récupère la borne à l'index $i.
+        $borne = $lesBornes[$i];
+
+        // Ajoute la valeur de 'indiceCompteurUnites' de chaque borne à $total.
+        // Si l'indice est null, le "?:" le remplacera par 0.
+        $total += $borne->getIndiceCompteurUnites() ?: 0;
+    }
 }

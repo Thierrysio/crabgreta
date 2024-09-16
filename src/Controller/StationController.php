@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Borne;
 use App\Entity\Station;
+use App\Entity\Maintenance;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,6 +36,9 @@ class StationController extends AbstractController
     #[Route('/station/creeravecborne', name: 'app_station_creeravecborne')]
     public function creeravecborne(EntityManagerInterface $entityManager): Response
     {
+        $maintenance = new Maintenance();
+        $entityManager->persist($maintenance);
+
         $borne = new Borne();
         $borne->setDateDerniereRevision(new \DateTime());
         $borne->setIndiceCompteurUnites(100);
@@ -52,11 +56,14 @@ class StationController extends AbstractController
         $station->addLesBorne($borne);
         $station->addLesBorne($borne2);
 
+        $station->setLaMaintenance($maintenance);
+
 
         $entityManager->persist($station);
         $entityManager->flush();
 
-        return new Response('la station dont le nom est : '. $station->getLibelleEmplacement() .' a été créée avecsucces');
-
+        return $this->render('station/stationBorne.html.twig', [
+            'laStation' => $station,
+        ]);
     }
 }
