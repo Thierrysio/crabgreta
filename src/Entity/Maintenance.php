@@ -174,7 +174,26 @@ public function getTotalIndiceCompteurUnites2(): int
     return $total;
 }
 
+public function getNombreBornesParTypeBorne(): array
+{
+    $bornesParType = [];
 
+    // Parcourt chaque visite de cette maintenance
+    foreach ($this->getLesVisites() as $visite) {
+        // Récupère le nombre de bornes par type de borne pour chaque visite
+        $bornesVisiteParType = $visite->getNombreBornesParTypeBorne();
+
+        // Ajoute les résultats au total pour chaque type de borne
+        foreach ($bornesVisiteParType as $typeBorneId => $nombreBornes) {
+            if (!isset($bornesParType[$typeBorneId])) {
+                $bornesParType[$typeBorneId] = 0;
+            }
+            $bornesParType[$typeBorneId] += $nombreBornes;
+        }
+    }
+
+    return $bornesParType;
+}
 
 
 }
