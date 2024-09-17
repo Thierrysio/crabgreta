@@ -118,5 +118,16 @@ class Borne
 
         return $this;
     }
-    
+    public function getTypeBorneId(): ?int
+{
+    // Vérifie si une TypeBorne est associée à cette borne et retourne son ID
+    return $this->leTypeBorne ? $this->getLeTypeBorne()->getId() : null;
+}
+
+public function getTypeBorneId2(): ?int
+{
+    //  retourne son ID
+    return $this->getLeTypeBorne()->getId();
+}
+
 }

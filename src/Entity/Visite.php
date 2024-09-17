@@ -138,6 +138,25 @@ class Visite
     }
     return $total;
 }
+public function getNombreBornesParTypeBorne(): array
+{
+    $bornesParType = [];
+
+    // Parcourt les bornes associées à cette visite
+    foreach ($this->getLesBornes() as $borne) {
+        $typeBorneId = $borne->getTypeBorneId();
+
+        // Si l'identifiant de TypeBorne est valide, on incrémente le compteur
+        if ($typeBorneId) {
+            if (!isset($bornesParType[$typeBorneId])) {
+                $bornesParType[$typeBorneId] = 0;
+            }
+            $bornesParType[$typeBorneId]++;
+        }
+    }
+
+    return $bornesParType;
+}
 
 
 }

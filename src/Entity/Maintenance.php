@@ -174,4 +174,7 @@ public function getTotalIndiceCompteurUnites2(): int
     return $total;
 }
 
+
+
+
 }
