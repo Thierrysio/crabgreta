@@ -145,4 +145,33 @@ class Maintenance
 
     return $dureeTotale;
 }
+public function getTotalIndiceCompteurUnites(): int
+{
+    $total = 0;
+
+    // Parcourt chaque visite associée à cette maintenance
+    foreach ($this->getLesVisites() as $visite) {
+        // Pour chaque visite, parcourt les bornes associées
+        foreach ($visite->getLesBornes() as $borne) {
+            // Ajoute l'indiceCompteurUnites de chaque borne au total
+            $total += $borne->getIndiceCompteurUnites() ?: 0;
+        }
+    }
+
+    return $total;
+}
+
+public function getTotalIndiceCompteurUnites2(): int
+{
+    $total = 0;
+
+    // Parcourt chaque visite associée à cette maintenance
+    foreach ($this->getLesVisites() as $visite) {
+        // Ajoute le total des indiceCompteurUnites pour chaque visite
+        $total += $visite->getTotalIndiceCompteurUnites();
+    }
+
+    return $total;
+}
+
 }
