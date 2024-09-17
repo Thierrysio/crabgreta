@@ -35,5 +35,28 @@ class VisiteTest extends TestCase
         $this->assertEquals(300, $total);
     }
 
-    
+    public function testGetTotalIndiceCompteurUnitesNew()
+    {
+        // Création de deux mocks pour la classe Borne
+        $borneMock1 = $this->createMock(Borne::class);
+        $borneMock2 = $this->createMock(Borne::class);
+
+        // On configure le mock pour retourner des valeurs spécifiques pour getIndiceCompteurUnites()
+        $borneMock1->method('getIndiceCompteurUnites')->willReturn(100);
+        $borneMock2->method('getIndiceCompteurUnites')->willReturn(200);
+
+        // Création de l'objet Visite à tester
+        $visite = $this->getMockBuilder(Visite::class)
+                       ->onlyMethods(['getLesBornes']) // On se moque uniquement de la méthode getLesBornes()
+                       ->getMock();
+
+        // On configure le mock pour que getLesBornes() retourne un tableau de bornes
+        $visite->method('getLesBornes')->willReturn([$borneMock1, $borneMock2]);
+
+        // On appelle la méthode à tester
+        $total = $visite->getTotalIndiceCompteurUnites();
+
+        // Vérification que le total est la somme des indices des bornes (100 + 200)
+        $this->assertEquals(300, $total);
+    }
 }
