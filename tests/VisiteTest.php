@@ -3,6 +3,7 @@
 namespace App\Tests;
 use App\Entity\Borne;
 use App\Entity\Visite;
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 class VisiteTest extends TestCase
@@ -37,21 +38,24 @@ class VisiteTest extends TestCase
 
     public function testGetTotalIndiceCompteurUnitesNew()
     {
+        // Création de l'objet Visite à tester (pas de mock cette fois-ci)
+        $visite = new Visite();
+
         // Création de deux mocks pour la classe Borne
         $borneMock1 = $this->createMock(Borne::class);
         $borneMock2 = $this->createMock(Borne::class);
 
-        // On configure le mock pour retourner des valeurs spécifiques pour getIndiceCompteurUnites()
+        // On configure les mocks pour retourner des valeurs spécifiques pour getIndiceCompteurUnites()
         $borneMock1->method('getIndiceCompteurUnites')->willReturn(100);
         $borneMock2->method('getIndiceCompteurUnites')->willReturn(200);
 
-        // Création de l'objet Visite à tester
-        $visite = $this->getMockBuilder(Visite::class)
-                       ->onlyMethods(['getLesBornes']) // On se moque uniquement de la méthode getLesBornes()
-                       ->getMock();
+        // Création d'une collection de bornes en utilisant ArrayCollection
+        $bornes = new ArrayCollection([$borneMock1, $borneMock2]);
 
-        // On configure le mock pour que getLesBornes() retourne un tableau de bornes
-        $visite->method('getLesBornes')->willReturn([$borneMock1, $borneMock2]);
+        // On ajoute les bornes à la visite
+        foreach ($bornes as $borne) {
+            $visite->addLesBorne($borne);
+        }
 
         // On appelle la méthode à tester
         $total = $visite->getTotalIndiceCompteurUnites();
