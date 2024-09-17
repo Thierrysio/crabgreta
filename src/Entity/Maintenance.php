@@ -134,4 +134,15 @@ class Maintenance
 
         return $this;
     }
+
+    public function getDureeTotaleDesVisites(): int
+{
+    $dureeTotale = 0;
+
+    foreach ($this->getLesVisites() as $visite) {
+        $dureeTotale += $visite->getDureeTotale() ?: 0;
+    }
+
+    return $dureeTotale;
+}
 }
