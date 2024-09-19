@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Borne;
 use App\Entity\Station;
 use App\Entity\Maintenance;
+use App\Form\StationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -30,6 +32,28 @@ class StationController extends AbstractController
         $entityManager->flush();
 
         return new Response('la station dont le nom est : '. $station->getLibelleEmplacement() .' a été créée avecsucces');
+
+    }
+    #[Route('/station/creerform', name: 'app_station_creer_form')]
+    public function creerform(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $station = new Station();
+        $form = $this->createForm(StationType::class, $station);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $station = $form->getData();
+
+            $entityManager->persist($station);
+            $entityManager->flush();
+            return $this->redirectToRoute('task_success');
+        }
+
+        return $this->render('station/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+        
 
     }
 
