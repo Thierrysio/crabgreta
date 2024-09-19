@@ -34,27 +34,42 @@ class StationController extends AbstractController
         return new Response('la station dont le nom est : '. $station->getLibelleEmplacement() .' a été créée avecsucces');
 
     }
+    // Définition de la route pour accéder à cette action du contrôleur
     #[Route('/station/creerform', name: 'app_station_creer_form')]
     public function creerform(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // Création d'une nouvelle instance de l'entité Station
         $station = new Station();
+
+        // Création du formulaire en associant l'entité Station
         $form = $this->createForm(StationType::class, $station);
 
+        // Traitement de la requête HTTP
+        // Cette ligne permet au formulaire de gérer les données soumises par l'utilisateur
         $form->handleRequest($request);
+
+        // Vérification si le formulaire a été soumis et si les données sont valides
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            // Récupération des données du formulaire
+            // Cette étape est optionnelle car l'entité $station est déjà mise à jour
             $station = $form->getData();
 
+            // Préparation de l'entité pour la sauvegarde en base de données
             $entityManager->persist($station);
+
+            // Exécution de la requête pour sauvegarder l'entité
             $entityManager->flush();
+
+            // Redirection vers une autre page après le succès de l'opération
+            // Assurez-vous que la route 'task_success' existe
             return $this->redirectToRoute('task_success');
         }
 
+        // Affichage du formulaire dans la vue Twig
         return $this->render('station/new.html.twig', [
+            // Transmission de la vue du formulaire à la template Twig
             'form' => $form->createView(),
         ]);
-        
-
     }
 
     #[Route('/station/creeravecborne', name: 'app_station_creeravecborne')]
