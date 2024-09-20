@@ -6,6 +6,7 @@ use App\Entity\Borne;
 use App\Entity\Station;
 use App\Entity\Maintenance;
 use App\Form\StationType;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -103,6 +104,21 @@ class StationController extends AbstractController
 
         return $this->render('station/stationBorne.html.twig', [
             'laStation' => $station,
+        ]);
+    }
+
+    #[Route('/station/voirunobjet', name: 'app_station_voir_un_objet')]
+    public function voirUnObjet(EntityManagerInterface $entityManager): Response
+    {
+        $uneStation = new Station();
+
+        $uneStation->setLibelleEmplacement('station 04');
+
+        $entityManager->persist($uneStation);
+        $entityManager->flush();
+
+        return $this->render('station/voirunobjet.html.twig', [
+            'maStation' => $uneStation,
         ]);
     }
 }
