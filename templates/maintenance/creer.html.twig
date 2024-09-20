@@ -1,0 +1,7 @@
+{% for uneVisite in laMaintenance.getLesVisites() %}
+
+{{ uneVisite.getEtat() }}  
+{{ uneVisite.getLaStation().getLibelleEmplacement() }}
+
+
+{% endfor %}
