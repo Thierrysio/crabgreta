@@ -107,24 +107,37 @@ class StationController extends AbstractController
         ]);
     }
 
-    #[Route('/station/voirunobjet', name: 'app_station_voir_un_objet')]
-    public function voirUnObjet(EntityManagerInterface $entityManager): Response
+    #[Route('/station/voirunecollection', name: 'app_station_voir_une_collection')]
+    public function voirUneCollection(EntityManagerInterface $entityManager): Response
+   
     {
+        $borne = new Borne();
+        $borne->setDateDerniereRevision(new \DateTime());
+        $borne->setIndiceCompteurUnites(100);
+        $entityManager->persist($borne);
+
+        $borne2 = new Borne();
+        $borne2->setDateDerniereRevision(new \DateTime());
+        $borne2->setIndiceCompteurUnites(100);
+        $entityManager->persist($borne2);
+
         $uneStation = new Station();
 
         $uneStation->setLibelleEmplacement('station 04');
+        $uneStation->addLesBorne($borne);
+        $uneStation->addLesBorne($borne2);
 
         $entityManager->persist($uneStation);
         $entityManager->flush();
 
-        return $this->render('station/voirunobjet.html.twig', [
+        return $this->render('station/voirunecollection.html.twig', [
             'maStation' => $uneStation,
         ]);
     }
-
-    #[Route('/station/voirunecollection', name: 'app_station_voir_une_collection')]
-    public function voirUneCollection(EntityManagerInterface $entityManager): Response
-    {
+    #[Route('/station/voirunobjet', name: 'app_station_voir_un_objet')]
+    public function voirUnObjet(EntityManagerInterface $entityManager): Response
+     {
+        
         $uneStation = new Station();
 
         $uneStation->setLibelleEmplacement('station 04');
