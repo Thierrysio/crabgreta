@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Borne;
 use App\Entity\Station;
 use App\Entity\Maintenance;
+use App\Entity\TypeBorne;
 use App\Form\StationType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -164,4 +165,52 @@ public function voirUneCollection(EntityManagerInterface $entityManager): Respon
             'maStation' => $uneStation,
         ]);
     }
+
+        // Définition de la route pour l'URL '/station/voirunecollection' avec le nom 'app_station_voir_une_collection'
+#[Route('/station/voirunecollectionavectype', name: 'app_station_voir_une_collection_avec_type')]
+public function voirUneCollectionAvecType(EntityManagerInterface $entityManager): Response
+{
+    $typeBorne = new TypeBorne();
+    $typeBorne->setDureeRevision(50);
+    $typeBorne->setNbJoursEntreRevisions(20);
+    $typeBorne->setNbUnitesEntreRevisions(60);
+    $entityManager->persist( $typeBorne);
+    // Création d'un nouvel objet Borne
+    $borne = new Borne();
+    // Définition de la date de la dernière révision à la date actuelle
+    $borne->setDateDerniereRevision(new \DateTime());
+    // Définition de l'indice du compteur d'unités à 100
+    $borne->setIndiceCompteurUnites(100);
+    // Persistance de l'objet Borne pour l'enregistrer en base de données
+    $borne->setLeTypeBorne($typeBorne);
+    $entityManager->persist($borne);
+
+    // Création d'un deuxième objet Borne
+    $borne2 = new Borne();
+    // Définition de la date de la dernière révision à la date actuelle
+    $borne2->setDateDerniereRevision(new \DateTime());
+    // Définition de l'indice du compteur d'unités à 100
+    $borne2->setIndiceCompteurUnites(100);
+    // Persistance du deuxième objet Borne
+    $borne2->setLeTypeBorne($typeBorne);
+    $entityManager->persist($borne2);
+
+    // Création d'un nouvel objet Station
+    $uneStation = new Station();
+    // Définition du libellé de l'emplacement de la station
+    $uneStation->setLibelleEmplacement('station 04');
+    // Association des bornes créées à la station
+    $uneStation->addLesBorne($borne);
+    $uneStation->addLesBorne($borne2);
+
+    // Persistance de l'objet Station
+    $entityManager->persist($uneStation);
+    // Exécution des opérations de persistance en base de données
+    $entityManager->flush();
+
+    // Rendu de la vue 'voirunecollection.html.twig' en passant la station créée
+    return $this->render('station/voirunecollectionavectype.html.twig', [
+        'maStation' => $uneStation,
+    ]);
+}
 }

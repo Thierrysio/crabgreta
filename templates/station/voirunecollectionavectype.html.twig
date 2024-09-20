@@ -1,0 +1,12 @@
+<h1>
+{{ maStation.getLibelleEmplacement() }}
+</h1>
+<br>
+<br>
+{% for laborne  in maStation.getLesBornes() %}
+
+      {{ laborne.getIndiceCompteurUnites() }}   
+      {{ laborne.getLeTypeBorne().getDureeRevision() }}    
+<br>
+           
+{% endfor %}
