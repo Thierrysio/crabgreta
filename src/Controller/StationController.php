@@ -121,4 +121,19 @@ class StationController extends AbstractController
             'maStation' => $uneStation,
         ]);
     }
+
+    #[Route('/station/voirunecollection', name: 'app_station_voir_une_collection')]
+    public function voirUneCollection(EntityManagerInterface $entityManager): Response
+    {
+        $uneStation = new Station();
+
+        $uneStation->setLibelleEmplacement('station 04');
+
+        $entityManager->persist($uneStation);
+        $entityManager->flush();
+
+        return $this->render('station/voirunobjet.html.twig', [
+            'maStation' => $uneStation,
+        ]);
+    }
 }
