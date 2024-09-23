@@ -20,6 +20,21 @@ class BorneController extends AbstractController
         ]);
     }
 
+    #[Route('/borne/creerBorne', name: 'app_borne_creer_Borne')]
+    public function creerBorne(EntityManagerInterface $entityManager): Response
+    {
+
+        $borne = new Borne();
+        $borne->setDateDerniereRevision(new \DateTime());
+        $borne->setIndiceCompteurUnites(100);
+
+        $entityManager->persist($borne);
+
+        $entityManager->flush();
+
+        return new Response('aaa');      
+}
+
     #[Route('/borne/creerBorneTypeBorne', name: 'app_borne_creerBorneTypeBorne')]
     public function creerBorneTypeBorne(EntityManagerInterface $entityManager): Response
     {
@@ -77,5 +92,12 @@ class BorneController extends AbstractController
          // Transmission de la vue du formulaire à la template Twig
          'form' => $form->createView(),
      ]);
+ }
+ #[Route('/borne/voiruneborne/{id}', name: 'app_borne_voir_une_borne')]
+ public function voirUneBorne(Borne $uneBorne): Response
+ {
+    return $this->render('borne/voiruneborne.html.twig', [
+        'maBorne' => $uneBorne,
+    ]);
  }
 }
