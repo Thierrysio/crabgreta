@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Borne;
 use App\Entity\TypeBorne;
 use App\Form\BorneType;
+use App\Repository\BorneRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,4 +101,14 @@ class BorneController extends AbstractController
         'maBorne' => $uneBorne,
     ]);
  }
+ #[Route('/borne/voirtouteslesbornes', name: 'app_voir_toutes_les_bornes')]
+public function voirToutesLesStations(BorneRepository $borneRepository): Response
+{
+$lesBornes = $borneRepository->findAll();
+
+return $this->render('borne/voirtouteslesbornes.html.twig', [
+    'mesBornes' => $lesBornes,
+]);
+
+}
 }
