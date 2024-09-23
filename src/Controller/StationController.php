@@ -7,6 +7,7 @@ use App\Entity\Station;
 use App\Entity\Maintenance;
 use App\Entity\TypeBorne;
 use App\Form\StationType;
+use App\Repository\StationRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -229,4 +230,14 @@ public function voirUneStation(Station $uneStation): Response
     ]);
 }
 
+#[Route('/station/voirtouteslesstations', name: 'app_voir_toutes_les_stations')]
+public function voirToutesLesStations(StationRepository $stationRepository): Response
+{
+$lesStations = $stationRepository->findAll();
+
+return $this->render('station/voirtouteslesstations.html.twig', [
+    'mesStations' => $lesStations,
+]);
+
+}
 }
