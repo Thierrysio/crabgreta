@@ -251,6 +251,8 @@ public function voirLesBornesAvecRevision(Station $uneStation,StationRepository 
     
     return $this->render('station/voirunestation.html.twig', [
         'macollectionBorneRepository' => $collectionBorneRepository,
+        'mastation' => $uneStation,
+        'maStationRepository' => $maStationRepository,
     ]);
 }
 }
