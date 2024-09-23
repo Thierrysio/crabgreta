@@ -40,4 +40,15 @@ class TechnicienRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function getPrenomDuTechnicien(Technicien $leTechnicien): ?string
+    {
+        // Utilisation de QueryBuilder pour récupérer le prénom du technicien
+        return $this->createQueryBuilder('t')
+            ->select('t.prenom')
+            ->where('t = :technicien')
+            ->setParameter('technicien', $leTechnicien)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

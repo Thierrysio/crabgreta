@@ -17,15 +17,14 @@ class StationRepository extends ServiceEntityRepository
         parent::__construct($registry, Station::class);
     }
 
-    public function getLibelleEmplacement(Station $station): array
+    public function getLibelleEmplacement(Station $station): ?string
     {
         // Utilisation du QueryBuilder fourni par ServiceEntityRepository
-        $query = $this->createQueryBuilder('s')
+        return $this->createQueryBuilder('s')
             ->select('s.LibelleEmplacement')
             ->where('s = :station')
             ->setParameter('station', $station)
-            ->getQuery();
-
-        return $query->getResult();
+            ->getQuery()
+            ->getResult();
     }
 }
