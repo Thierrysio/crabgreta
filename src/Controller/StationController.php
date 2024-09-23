@@ -246,7 +246,7 @@ return $this->render('station/voirtouteslesstations.html.twig', [
 public function voirLesBornesAvecRevision(Station $uneStation,BorneRepository $borneRepository): Response
 {
     $collectionBorneRepository = $borneRepository->getLibelleEmplacementEtDureeRevisionParStation($uneStation);
-    dd($collectionBorneRepository);
+    
     return $this->render('station/voirunestation.html.twig', [
         'maStation' => $uneStation,
     ]);
