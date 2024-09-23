@@ -51,4 +51,16 @@ class TechnicienRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getEtatDesVisites(Technicien $leTechnicien): array
+    {
+        // Utilisation de QueryBuilder pour récupérer l'état des visites associées à un technicien
+        return $this->createQueryBuilder('t')
+            ->select('v.etat')
+            ->join('t.lesVisites', 'v')
+            ->where('t = :technicien')
+            ->setParameter('technicien', $leTechnicien)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -40,4 +40,33 @@ class MaintenanceRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function getLibelleEmplacementParMaintenance(Maintenance $laMaintenance): array
+{
+    // Utilisation de QueryBuilder pour récupérer les libellés d'emplacement associés à une maintenance
+    return $this->createQueryBuilder('m')
+        ->select('s.LibelleEmplacement')
+        ->join('m.lesTechniciens', 't')
+        ->join('t.lesVisites', 'v')
+        ->join('v.lesBornes', 'b')
+        ->join('b.laStation', 's')
+        ->where('m = :maintenance')
+        ->setParameter('maintenance', $laMaintenance)
+        ->getQuery()
+        ->getResult();
+}
+
+public function getTBParMaintenance(Maintenance $laMaintenance): array
+{
+    // Utilisation de QueryBuilder pour récupérer les libellés d'emplacement associés à une maintenance
+    return $this->createQueryBuilder('m')
+        ->select('s.LibelleEmplacement')
+        ->join('m.lesVisites', 'v')
+        ->join('v.lesBornes', 'b')
+        ->join('b.leTypeBorne', 'tb')
+        ->where('m = :maintenance')
+        ->setParameter('maintenance', $laMaintenance)
+        ->getQuery()
+        ->getResult();
+}
 }

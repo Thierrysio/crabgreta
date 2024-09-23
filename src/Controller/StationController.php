@@ -245,12 +245,12 @@ return $this->render('station/voirtouteslesstations.html.twig', [
 #[Route('/station/voirlesbornesavecrevision/{id}', name: 'app_station_voir_les_bornes_avec_revision')]
 public function voirLesBornesAvecRevision(Station $uneStation,StationRepository $stationRepository,  BorneRepository $borneRepository): Response
 {
-    $collectionStationRepository = $stationRepository->getLibelleEmplacement($uneStation);
-    dd($collectionStationRepository);
+    $maStationRepository = $stationRepository->getLibelleEmplacement($uneStation);
+    
     $collectionBorneRepository = $borneRepository->getLibelleEmplacementEtDureeRevisionParStation($uneStation);
     
     return $this->render('station/voirunestation.html.twig', [
-        'maCollection' => $collectionBorneRepository,
+        'macollectionBorneRepository' => $collectionBorneRepository,
     ]);
 }
 }
