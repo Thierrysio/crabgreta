@@ -240,4 +240,12 @@ return $this->render('station/voirtouteslesstations.html.twig', [
 ]);
 
 }
+
+#[Route('/station/voirlesbornesavecrevision/{id}', name: 'app_station_voir_les_bornes_avec_revision')]
+public function voirLesBornesAvecRevision(Station $uneStation): Response
+{
+    return $this->render('station/voirunestation.html.twig', [
+        'maStation' => $uneStation,
+    ]);
+}
 }
