@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Borne;
 use App\Entity\Station;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,9 +19,9 @@ class BorneRepository extends ServiceEntityRepository
         parent::__construct($registry, Borne::class);
     }
 
-    public function getLibelleEmplacementEtDureeRevisionParStation(Station $station): array
+    public function getLibelleEmplacementEtDureeRevisionParStation(Station $station,EntityManagerInterface $entityManager): array
     {
-        $query = $this->entityManager->createQuery(
+        $query = $entityManager->createQuery(
             'SELECT s.LibelleEmplacement, tb.dureeRevision 
              FROM Borne b
              JOIN b.laStation s
