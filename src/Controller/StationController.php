@@ -7,6 +7,7 @@ use App\Entity\Station;
 use App\Entity\Maintenance;
 use App\Entity\TypeBorne;
 use App\Form\StationType;
+use App\Repository\BorneRepository;
 use App\Repository\StationRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -242,8 +243,10 @@ return $this->render('station/voirtouteslesstations.html.twig', [
 }
 
 #[Route('/station/voirlesbornesavecrevision/{id}', name: 'app_station_voir_les_bornes_avec_revision')]
-public function voirLesBornesAvecRevision(Station $uneStation): Response
+public function voirLesBornesAvecRevision(Station $uneStation,BorneRepository $borneRepository): Response
 {
+    $collectionBorneRepository = $borneRepository->getLibelleEmplacementEtDureeRevisionParStation($uneStation);
+    dd($collectionBorneRepository);
     return $this->render('station/voirunestation.html.twig', [
         'maStation' => $uneStation,
     ]);
