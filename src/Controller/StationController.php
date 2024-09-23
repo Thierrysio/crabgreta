@@ -213,12 +213,20 @@ public function voirUneCollectionAvecType(EntityManagerInterface $entityManager)
         'maStation' => $uneStation,
     ]);
 }
+// Définition de la route associée à l'URL /station/voirunestation/{id}
+// {id} représente un paramètre dynamique capturé dans l'URL.
+// 'name' permet de donner un nom unique à la route pour faciliter sa réutilisation.
 #[Route('/station/voirunestation/{id}', name: 'app_station_voir_une_station')]
 public function voirUneStation(Station $uneStation): Response
- {
+{
+    // Cette méthode reçoit un objet de type Station, probablement via le paramètre {id}
+    // qui est transformé en objet Station par Symfony (grâce à un param converter).
+    
+    // La méthode renvoie une vue (template Twig) située dans station/voirunestation.html.twig
+    // et passe l'objet $uneStation à la vue en le nommant 'maStation' dans le contexte du template.
     return $this->render('station/voirunestation.html.twig', [
         'maStation' => $uneStation,
     ]);
+}
 
- }
 }
