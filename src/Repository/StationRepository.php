@@ -25,6 +25,6 @@ class StationRepository extends ServiceEntityRepository
             ->where('s = :station')
             ->setParameter('station', $station)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getSingleScalarResult();
     }
 }
