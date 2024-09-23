@@ -213,4 +213,12 @@ public function voirUneCollectionAvecType(EntityManagerInterface $entityManager)
         'maStation' => $uneStation,
     ]);
 }
+#[Route('/station/voirunestation/{id}', name: 'app_station_voir_une_station')]
+public function voirUneStation(Station $uneStation): Response
+ {
+    return $this->render('station/voirunestation.html.twig', [
+        'maStation' => $uneStation,
+    ]);
+
+ }
 }
