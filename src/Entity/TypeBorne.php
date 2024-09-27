@@ -119,7 +119,7 @@ class TypeBorne
         // Si la collection n'est pas vide, elle retourne les bornes
         return [
             'typeBorne' => $this,
-             'bornes' => 'bornes to be alive'
+            'bornes' => 'bornes to be alive'
         ];
     }
     

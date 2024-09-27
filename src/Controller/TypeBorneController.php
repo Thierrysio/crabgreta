@@ -21,18 +21,14 @@ class TypeBorneController extends AbstractController
     public function voirUnTypeBorne(TypeBorne $untypeborne): Response
 {
 
-    if($untypeborne->getLesItems())
-    {
-        return $this->render('type_borne/voiruntypeborneavecbornes.html.twig', [
-            'unTypeBorne' => $untypeborne,
-        ]);
-    }
-    else
-    {
+    $result = $untypeborne->getLesItems();
+    
+    
         return $this->render('type_borne/voiruntypebornesansborne.html.twig', [
-            'unTypeBorne' => $untypeborne,
+            'unTypeBorne' => $result['typeBorne'],
+            'bornes' => $result['bornes'],
         ]);
-    }
+
 
     //je dois verifier l'existence d'une collection de bornes
     // si ok j'utilise le render deja créé
