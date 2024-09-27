@@ -1,7 +1,7 @@
-{{ maStation.getLibelleEmplacement() }}
 
-{% for unObjet   in macollectionBorneRepository %}
 
-{{ unObjet.LibelleEmplacement }}    et    {{unObjet.dureeRevision  }}
+{% for uneligne   in macollectionBorneRepository %}
 
+{{ uneligne.LibelleEmplacement }}    et    {{uneligne.dureeRevision  }}
+<br>
 {% endfor %} 
