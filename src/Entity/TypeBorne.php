@@ -105,4 +105,23 @@ class TypeBorne
 
         return $this;
     }
+
+    public function getLesItems(): array
+    {
+        // Vérifie si la collection de bornes est vide
+        if ($this->lesBornes->isEmpty()) {
+            return [
+                'typeBorne' => $this,
+                'bornes' => 'pas de bornes'
+            ];
+        }
+    
+        // Si la collection n'est pas vide, elle retourne les bornes
+        return [
+            'typeBorne' => $this,
+             'bornes' => 'bornes to be alive'
+        ];
+    }
+    
+
 }

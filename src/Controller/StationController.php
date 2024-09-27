@@ -255,7 +255,8 @@ public function voirLesBornesAvecRevision(Station $uneStation,StationRepository 
         'maStationRepository' => $maStationRepository,
     ]);
 }
-#[Route('/station/voirunestationparticuliere/{id}',name: 'app_station_voir_une_station_particuliere')]
+#[Route('/station/voirunestationparticuliere/{id
+}',name: 'app_station_voir_une_station_particuliere')]
 public function voirUneStationParticuliere(Station $uneStation):Response
 {
 
